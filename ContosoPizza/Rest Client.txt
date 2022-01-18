@@ -1,0 +1,8 @@
+post https://localhost:7216/persons/27/updateColor?color=1
+
+###
+
+post https://localhost:7216/persons/
+content-type: application/json
+
+{"name":"dfdfdf","lastname":"sdfsdf","zipcode":"38835","city":"ddss","color":3}

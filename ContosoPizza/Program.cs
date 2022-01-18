@@ -1,5 +1,6 @@
+using ContosoPizza.Data;
 using ContosoPizza.Services;
-// Additional using declarations
+using System.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,17 +8,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Add the PizzaContext
-
-// Add the PromotionsContext
-
-builder.Services.AddScoped<PizzaService>();
+builder.Services.AddSqlite<PersonContext>("Data Source=MorePerson.db");
+builder.Services.AddScoped<PersonService>();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+if (app.Environment.IsDevelopment()) {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
@@ -28,6 +25,9 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-// Add the CreateDbInNotExists method call
+app.CreateDbIfNotExists();
+
+List<Person> persons = ReadingCSV.ReadPersons(@"E:\Projekte\C#\HelloWorld\sample-input.csv");
+app.AddData(persons);
 
 app.Run();
